@@ -256,9 +256,12 @@ Wir haben bereits alle notewendigen Bausteine, um ein Modell zu
 trainineren.  Dazu verwenden wir das Kommando `pld-fit` mit der Option
 `--evaluate`:
 
+Auf Linux:
+
 ```bash
 $ cd step1
-$ PALLADIUM_CONFIG=config.py pld-fit --evaluate
+$ export PALLADIUM_CONFIG=config.py
+$ pld-fit --evaluate
 INFO:palladium:Loading data...
 ...
 INFO:palladium:Train score: 0.9
@@ -266,6 +269,14 @@ INFO:palladium:Train score: 0.9
 INFO:palladium:Test score:  0.82
 ...
 INFO:palladium:Wrote model with version 1.
+```
+
+Auf Windows:
+
+```shell
+$ cd step1
+$ set PALLADIUM_CONFIG=config.py
+$ pld-fit --evaluate
 ```
 
 Unser Klassifikator erreicht eine Genauigkeit von 90% auf dem
@@ -333,7 +344,8 @@ Grid Search definiert:
 Und so fuehren wir den Grid Search aus:
 
 ```bash
-$ PALLADIUM_CONFIG=config.py,../step2/config.py pld-grid-search
+$ cd ../step2
+$ pld-grid-search
 ```
 
 ---
@@ -386,8 +398,8 @@ Die Konfiguration befindet sich auch in `step3/config.py`.
 
 ```bash
 $ cd ../step3
-$ PALLADIUM_CONFIG=config.py pld-fit --evaluate
-$ PALLADIUM_CONFIG=config.py pld-devserver
+$ pld-fit --evaluate
+$ pld-devserver
 ```
 
 Der Service laesst sich nun per GET Anfrage aufrufen:
@@ -429,7 +441,7 @@ if __name__ == '__main__':
 Ausgefuehrt:
 
 ```bash
-$ PALLADIUM_CONFIG=config.py python predict.py 6.3 2.5 4.9 1.5
+$ python predict.py 6.3 2.5 4.9 1.5
 Iris-setosa: 0.0%
 Iris-versicolor: 44.9%
 Iris-virginica: 55.1%
@@ -448,13 +460,21 @@ Netzwerke auf Basis von PyTorch.
 
 ## Installation
 
-Falls eine CUDA-Installation vorhanden:
+```bash
+$ pip install -r step4/requirements-base.txt
+```
+
+Auf http://pytorch.org finden sich Installationsanweisungen fuer
+verschiedene Platformen.  Windows- und Mac-Nutzer sehen bitte dort
+nach.
+
+Unter Linux, falls eine CUDA-Installation vorhanden:
 
 ```bash
 $ pip install -r step4/requirements-gpu.txt
 ```
 
-Ansonsten:
+Unter Linux, ohne CUDA:
 
 ```bash
 $ pip install -r step4/requirements-cpu.txt
@@ -619,7 +639,7 @@ sind.
 ```
 
 ```bash
-$ PALLADIUM_CONFIG=config.py pld-grid-search
+$ pld-grid-search
 ```
 
 ## Uebung 2:
@@ -775,10 +795,9 @@ kann.
     },
 ```
 
-Wenn du das Netz trainieren kannst (`PALLADIUM_CONFIG=config.py
-pld-fit`), dann wirf einen Blick auf die Grid Search Parameter.
-Findest du eine Konfiguration, die eine Genauigkeit von 55% oder mehr
-beim `mean_test_score` erreicht?
+Wenn du das Netz trainieren kannst (`pld-fit`), dann wirf einen Blick
+auf die Grid Search Parameter.  Findest du eine Konfiguration, die
+eine Genauigkeit von 55% oder mehr beim `mean_test_score` erreicht?
 
 ---
 
@@ -846,7 +865,7 @@ Das Training starten wir wie gewohnt so:
 
 ```bash
 $ cd ../step7
-$ PALLADIUM_CONFIG=config.py pld-fit --evaluate
+$ pld-fit --evaluate
 ```
 
 ---
@@ -856,7 +875,7 @@ $ PALLADIUM_CONFIG=config.py pld-fit --evaluate
 Nach dem Training starten wir den Webservice:
 
 ```bash
-$ PALLADIUM_CONFIG=config.py pld-devserver
+$ pld-devserver
 ```
 
 Der Aufruf des Service erfolgt so:
