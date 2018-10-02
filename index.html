@@ -240,7 +240,7 @@ you're on Windows and don't have Visual Code installed:
 
 ```bash
 $ conda install ujson
-$ pip install -r requirements.txt
+$ pip install -r step1/requirements.txt
 ```
 
 ---
@@ -612,6 +612,8 @@ algorithms.
 
 # Grid Search: Network hyperparameters
 
+In `step4/config.py`:
+
 ```python
     'grid_search': {
         'param_grid': {
@@ -660,10 +662,9 @@ learning rate (`net__lr`).  Can you find a combination that gets a
 
 # Grid Search: Parallelization with Dask
 
-Wenn wir jetzt erwaegen, noch weitere Hyperparameter in die Suche
-reinzunehmen, wie etwa die Zahl der Neuronen im *Hidden Layer*
-(`num_units`), dann wird klar, dass diese Suche bald sehr lange dauern
-kann:
+If we now consider adding more hyperparameters to the search, such as
+the number of neurons in our network's *hidden layer*, we'll
+understand that the search can quickly take a long time.
 
 ```python
     'grid_search': {
@@ -674,43 +675,45 @@ kann:
         },
 ```
 
-Bei typischen Machine Learning Projekten ist die Suche nach den besten
-Hyperparametern beim Training oft der rechenintensivste Teil.  Aus
-diesem Grund unterstuetzt Palladium ein Parallelisieren dieses
-Vorgangs mit Hilfe von Computerclustern per
-[Dask](http://dask.pydata.org):
+The search for the best hyperparameters is often the most
+computationally intense part of machine learning projects.  For this
+reason, scikit-learn supports the parallelization of Grid Search onto
+clusters via [Dask](http://dask.pydata.org):
 
 > Dask is a flexible library for parallel computing in Python.
 
 ---
 
-# Dask: Anwendung
+# Dask: Application
 
 ```bash
 $ pip install dask distributed
 ```
 
-Wir starten nun den Scheduler in einem neuen Terminal-Fenster:
+We start a scheduler inside a new terminal windows:
 
 ```bash
 $ source bin/activate
 $ dask-scheduler
 ```
 
-Und einen Worker in einem weiteren neuen Terminal-Fenster:
+And a worker in another terminal window.  You may add an arbitrary
+number of these:
 
 ```bash
-$ source bin/activate
+$ source bin/activate  # on Windows: scripts/activate.bat
 $ cd step4
-$ PYTHONPATH=. dask-worker 127.0.0.1:8786
+$ export PYTHONPATH=.  # on Windows: set PYTHONPATH=.
+$ dask-worker 127.0.0.1:8786
 ```
 
-An diesem Punkt koennten wir beliebig viele weitere Worker starten.
-
-Schliesslich starten wir unser Grid Search mit diesem Kommando:
+Finally, we start our Grid Search like this (from inside the environment!):
 
 ```bash
-$ PALLADIUM_CONFIG=config.py,dask-config.py pld-grid-search
+$ cd step4
+$ export PALLADIUM_CONFIG=config.py,dask-config.py
+$ # or on Windows: set PALLADIUM_CONFIG=config.py,dask-config.py
+$ pld-grid-search
 ```
 
 ---
@@ -728,6 +731,10 @@ use the network from our last example to do the classification.
 
 Note that when you are finished implementing the DatasetLoader, you'll
 see an error trying to fit the neural network.
+
+```bash
+$ pip install -U scikit-learn
+```
 
 ---
 
@@ -801,9 +808,8 @@ as a continuous value between 0 and 10.
 
 - We make a copy of `step5` and call the new directory `step6`
 - Our network needs to have one output instead of ten
-- The `softmax` function is not used in regression: remove it.
-- We use the `neg_mean_absolute_error_scorer` instead of
-  `accuracy_scorer`.
+- The `softmax` function is not used in regression: remove it
+- We use the `neg_mean_absolute_error` instead of `accuracy` in `config.py`
 - We make use of `NeuralNetRegressor` instead of `NeuralNetClassifier`
 - We'll replace our `PipelineY` with `sklearn.pipeline.Pipeline`.  The
   `LabelEncoder` is no longer useful.  (tricky!)
@@ -897,7 +903,7 @@ Look for `RNN_sentiment_classification.ipynb`.
 
 ---
 
-# Fin
+# End
 
 - https://github.com/ottogroup/palladium
 - https://github.com/scikit-learn/scikit-learn
@@ -908,8 +914,13 @@ Look for `RNN_sentiment_classification.ipynb`.
 - [twitter.com/dnouri](https://twitter.com/dnouri)
 - [danielnouri.org](http://danielnouri.org)
 - [naturalvision.de](http://naturalvision.de)
+- [linkedin.com/in/nouri](https://www.linkedin.com/in/nouri)
 
----
+## Images
+
+- [scikit-learn](http://scikit-learn.org)
+- [Machine Learning
+  course](https://www.coursera.org/learn/machine-learning) on Coursera
 
     </textarea>
     <script src="resources/remark.js" type="text/javascript">

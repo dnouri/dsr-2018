@@ -19,5 +19,5 @@ class OpenML:
         #
         # The `__call__` method that we implement here is supposed to
         # return a tuple of (X, y), where X is a NxM feature matrix
-        # and y a target vector of size n.
+        # and y a target vector of size N.
         pass
