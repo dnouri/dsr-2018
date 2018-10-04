@@ -118,7 +118,7 @@ The columns are:
 
 - `sepal length`
 - `sepal width`
-- `petal width`
+- `petal length`
 - `petal width`
 - `species`
 
@@ -168,9 +168,9 @@ responsible for reading the dataset:
 
 # Palladium: Configuration and code separated
 
-Palladium encourages the separatin of configuration and code.  Machine
-Learning projects typically have a lot of constants and configuration.
-Here are some examples:
+Palladium encourages the separation of configuration and code.
+Machine Learning projects typically have a lot of constants and
+configuration.  Here are some examples:
 
 - Path to the dataset
 
@@ -249,9 +249,7 @@ $ pip install -r step1/requirements.txt
 
 We already have all pieces in place to fit our first model.  To fit,
 we'll use Palladium's `pld-fit` command along with the `--evaluate`
-option:
-
-On Linux:
+option.  On Linux:
 
 ```bash
 $ cd step1
@@ -528,7 +526,7 @@ def create_pipeline(
 
 `StandardScaler` is one of the transforms that scikit-learn itself
 implements.  This transform standardizes features by removing the mean
-and scaling to unit variance
+and scaling features to unit variance.
 
 From the [scikit-learn
 docs](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html):
